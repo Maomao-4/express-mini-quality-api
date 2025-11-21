@@ -2,6 +2,8 @@
 
 ### **Parcial III – Calidad de Software Avanzado**
 
+**Yanisca Herrera Francp**
+
 ---
 
 # 🧩 1. Diferencia entre CI y CD
