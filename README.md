@@ -1,7 +1,3 @@
-
-
-# 📘 **README.md — express-mini-quality-api** 
-
 # **express-mini-quality-api**
 
 API REST minimalista creada con **Node.js + Express**, diseñada específicamente para demostrar **calidad de software**, incluyendo:
