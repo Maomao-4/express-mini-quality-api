@@ -1,15 +1,18 @@
 {
   "name": "parcial-calidad-iii-corte",
   "version": "1.0.0",
-  "description": "",
+  "description": "Parcial calidad de software corte III - Api Express",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "test": "jest --coverage"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yanisca Lynn",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "express": "^5.1.0"
   },
@@ -18,6 +21,7 @@
     "@types/node": "^24.10.1",
     "eslint": "^9.39.1",
     "jest": "^30.2.0",
+    "supertest": "^7.1.4",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
