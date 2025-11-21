@@ -1,68 +1,239 @@
+# 📄 **RESPUESTAS.md**
 
+# **Segundo Proyecto — express-task-manager-api**
 
-## 1. Diferencia entre CI (Integración Continua) y CD (Entrega Continua) 
-
-La Integración Continua (CI) es como cuando uno está programando y cada ratito va subiendo cosas al repositorio para que el sistema revise si nada se dañó. O sea, que si metí un error en el código, el pipeline lo detecta y me dice “hey, esto no sirve”. En mi caso, yo subo el proyecto y GitHub Actions corre los tests y también el lint.
-
-La Entrega Continua (CD) es como el paso siguiente, cuando el código ya está probado y se podría pasar a despliegue. No hace el despliegue automático del todo, pero deja todo listo para que sea fácil hacerlo. En mi proyecto no hago deploy porque es un parcial, pero igual entendí que CI es para revisar y CD es para tener la entrega casi lista.
-
-## 2. Estrategia del proyecto
-
-El lenguaje que usé fue **JavaScript**, pero con módulos comunes (CommonJS) porque con ESM me dio muchos problemas en Jest. Aprendí que Jest se lleva mejor con CommonJS.
-
-El linter que usé fue **ESLint**, con la config plana (flat config) porque en la versión 9 es obligatoria y no se puede usar env. Tocó poner las globals a mano.
-
-El framework de pruebas fue **Jest**, y para pruebas de endpoints usé **supertest**, que sirve para simular peticiones HTTP sin levantar el servidor.
-
-La herramienta de cobertura es la misma Jest, que genera los porcentajes. Yo puse un umbral mínimo, pero al principio me falló porque tenía funciones sin cubrir. Al final ajusté los valores y ya pasó.
-
-## 3. Ejecución fallida del workflow
-
-Para generar un run fallido, lo que hice fue dañar uno de los tests. Literalmente cambié la expectativa de un test por algo que sabía que no iba a salir. Por ejemplo, donde decía `expect(response.body.status).toBe('ok')` lo cambié a `'NO'`.
-
-GitHub Actions corrió el pipeline y salió en rojo. El log decía algo tipo:
-
-```
-Expected: "NO"
-Received: "ok"
-Test suite failed
-```
-
-Entonces el run quedó fallido, como pedían en el parcial. Aprendí que si falla un test, automáticamente falla todo.
-
-## 4. Ejecución exitosa del workflow
-
-Para volver a ponerlo en verde, simplemente regresé el test a su valor correcto. Hice otro commit y push.
-
-En GitHub Actions ahora sí salió todo en verde. Los logs mostraban que se ejecutó:
-
-* npm install
-* npm run lint
-* npm test
-* y que todos los 17 tests pasaban
-
-También decía la cobertura, que quedó como 90%. Eso ya era suficiente para pasar.
-
-## 5. Uso de act
-
-Para simular el workflow localmente, usé el comando:
-
-```
-act
-```
-
-Eso hace que act lea el archivo de GitHub Actions y corra los pasos como si fuera GitHub. En los logs se ve cómo va haciendo las cosas: instala dependencias, corre el lint, corre los tests, etc.
-
-La diferencia que noté es que en GitHub Actions los logs salen como más ordenados y con colores, y en act salen un poco más crudos. Pero funcionalmente sirve para ver si algo va a fallar antes de hacer push.
-
-## 6. Reflexión sobre IA y calidad
-
-Un método para detectar si el código es generado por IA podría ser revisar si tiene un estilo demasiado perfecto o comentarios que suenan genéricos. Otro método puede ser usar analizadores que detecten patrones repetidos que suelen aparecer en código de IA.
-
-Pero igual no se puede asegurar al 100% porque un humano puede escribir parecido, o puede corregir la IA, y también la IA puede replicar estilos humanos.
-
-Una política ética podría ser que sí se permita usar IA, pero diciendo qué partes se generaron con IA y cuáles no. Y también que el estudiante entienda lo que entrega, porque si lo presenta sin saber, eso sí sería engaño.
+**Parcial III – Calidad de Software Avanzado**
 
 ---
 
+# 🧩 1. Diferencia entre CI y CD
 
+### ✔ **Integración Continua (CI)**
+
+La integración continua es el proceso de ejecutar automáticamente:
+
+* Linter (análisis estático),
+* Pruebas unitarias,
+* Verificación de cobertura,
+* Validación del proyecto en múltiples versiones de Node,
+
+cada vez que se hace un **push** o un **pull request**.
+El objetivo es detectar errores **lo antes posible** y mantener el código siempre en un estado estable.
+
+### ✔ **Entrega Continua (CD)**
+
+La entrega continua garantiza que una vez que el pipeline pasa correctamente:
+
+* el proyecto está listo para ser desplegado,
+* los artefactos generados (coverage, build, etc.) son consistentes,
+* cada commit deja el proyecto preparado para una entrega real.
+
+En este proyecto, CD se evidencia en la **subida automática del reporte de cobertura** como artifact cuando la ejecución es exitosa.
+
+---
+
+# 🧱 2. Estrategia de calidad usada en el proyecto
+
+### ✔ Lenguaje y framework
+
+* Node.js + Express
+* API REST de tareas sin base de datos
+
+### ✔ Validación de calidad
+
+* **ESLint** para análisis estático
+
+  * Reglas para estilo consistente y errores comunes
+* **Jest + Supertest** para pruebas unitarias
+* **Cobertura mínima del 80%**
+
+  * Configurada en `jest.config.js`
+* **GitHub Actions** para CI/CD
+
+  * Matriz de versiones Node (18.x y 20.x)
+  * Pasos: install → lint → tests → cobertura → artifacts
+* **act** para validar el pipeline de manera local
+
+---
+
+# 🧪 3. Evidencia de ejecución local del pipeline usando `act`
+
+## 📌 3.1. `act -l`
+
+**Comando usado:**
+
+```
+act -l
+```
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #1**
+> (Debe mostrar los workflows detectados por act, incluyendo tu archivo .yml)
+
+---
+
+## 📌 3.2. `act push` — ejecución completa con linter + tests + cobertura
+
+**Comando usado:**
+
+```
+act push
+```
+
+Esto simula un push real y ejecuta:
+
+* Instalación de dependencias
+* Linter (ESLint)
+* Pruebas unitarias
+* Cobertura
+* Verificación del umbral
+* Subida de artifacts
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #2**
+> (Debe mostrarse la tabla de cobertura, el linter pasando, y los pasos de CI en verde exactamente como en GitHub)
+
+---
+
+# 🔍 4. Análisis del Linter (ESLint)
+
+### ✔ ¿Qué valida el linter?
+
+* Estilo de código uniforme
+* Comillas simples
+* Punto y coma
+* Variables usadas correctamente
+* Evitar errores comunes de sintaxis
+
+### ✔ ¿Por qué puede fallar?
+
+* Comillas dobles en lugar de simples
+* Falta de `;`
+* Código muerto
+* Variables sin usar
+
+## 📌 4.1. Testeo del linter (sin errores)
+
+**Comando usado:**
+
+```
+npm run lint
+```
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #3**
+> (Muestra eslint pasando sin errores)
+
+---
+
+## 📌 4.2. Aplicando fix en caso de errores
+
+**Comando usado:**
+
+```
+npx eslint . --fix
+```
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #4**
+> (Debe mostrar el fix corrigiendo errores, si los hubo)
+
+---
+
+# 🧪 5. Evidencias de pruebas locales (tests)
+
+## ✔ ¿Qué prueban los tests?
+
+* Funcionamiento correcto de TODOS los endpoints
+* Validaciones
+* Errores esperados (400 / 404)
+* Cambios de estado (`toggle`)
+* Formato de las tareas
+* Cobertura mínima
+
+## 📌 5.1. Ejecución de tests locales
+
+**Comando usado:**
+
+```
+npm test
+```
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #5**
+> (Debe mostrar los  tests pasando)
+
+---
+
+## 📌 5.2. Ejecución de tests con cobertura
+
+**Comando usado:**
+
+```
+npm test -- --coverage
+```
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #6**
+> (Debe mostrar la tabla con el porcentaje de cobertura)
+
+---
+
+# ⚠️ 6. Evidencia de ejecución fallida del pipeline (CI)
+
+Para cumplir el parcial, se debe mostrar un **run fallido**.
+
+Tu error puede ser por:
+
+* Fallo de ESLint
+* Test roto
+* Cobertura insuficiente
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #7**
+> (Debe mostrar el workflow fallido en rojo y el mensaje del error)
+
+**Explicación breve:**
+Describe aquí qué rompiste y por qué falló.
+
+---
+
+# ✅ 7. Evidencia de ejecución exitosa del pipeline (CI)
+
+📸 **Espacio para la captura:**
+
+> **PEGAR AQUÍ CAPTURA #8**
+> (Workflow completo en verde con lint + tests + coverage correctos)
+
+**Explicación breve:**
+Describe aquí qué corregiste para que todo volviera a verde.
+
+---
+
+# 🤖 8. Reflexión sobre el uso de IA en proyectos académicos
+
+### ✔ Métodos para intentar detectar IA
+
+1. Comparación de estilos (inconsistencias humanas vs. uniformidad de IA)
+2. Análisis semántico y patrones de redacción
+3. Herramientas de detección basadas en modelos lingüísticos
+
+### ✔ Por qué NO es posible garantizar detección al 100%
+
+* La IA puede imitar estilos humanos.
+* Estudiantes pueden reescribir contenidos generados.
+* No existen marcadores técnicos obligatorios de autoría.
+
+### ✔ Política ética propuesta
+
+* La IA puede servir como apoyo conceptual (explicaciones, dudas).
+* **No debe generar código, soluciones completas ni artefactos del parcial.**
+* Todo código debe ser escrito, entendido y explicado por el estudiante.
+* Se debe declarar el uso de IA como asistencia, no como generación.
