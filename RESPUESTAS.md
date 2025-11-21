@@ -1,8 +1,6 @@
-# 📄 **RESPUESTAS.md**
+# **express-mini-quality-api** 
 
-# **Segundo Proyecto — express-task-manager-api**
-
-**Parcial III – Calidad de Software Avanzado**
+### **Parcial III – Calidad de Software Avanzado**
 
 ---
 
@@ -10,53 +8,52 @@
 
 ### ✔ **Integración Continua (CI)**
 
-La integración continua es el proceso de ejecutar automáticamente:
+La integración continua es un proceso en el que cada cambio enviado al repositorio ejecuta automáticamente:
 
-* Linter (análisis estático),
-* Pruebas unitarias,
-* Verificación de cobertura,
-* Validación del proyecto en múltiples versiones de Node,
+* Análisis estático (ESLint)
+* Pruebas unitarias (Jest + Supertest)
+* Verificación de cobertura mínima
+* Validación del proyecto en múltiples versiones de Node
 
-cada vez que se hace un **push** o un **pull request**.
-El objetivo es detectar errores **lo antes posible** y mantener el código siempre en un estado estable.
+El objetivo de CI es detectar errores **rápidamente**, mantener el código estable y asegurar que cada commit respete las reglas de calidad definidas.
 
 ### ✔ **Entrega Continua (CD)**
 
-La entrega continua garantiza que una vez que el pipeline pasa correctamente:
+La entrega continua garantiza que, después de pasar CI:
 
-* el proyecto está listo para ser desplegado,
-* los artefactos generados (coverage, build, etc.) son consistentes,
-* cada commit deja el proyecto preparado para una entrega real.
+* El proyecto queda **listo para ser entregado o desplegado**.
+* Los artefactos (como el reporte de cobertura) se generan automáticamente.
+* No es necesaria intervención manual para validar calidad.
 
-En este proyecto, CD se evidencia en la **subida automática del reporte de cobertura** como artifact cuando la ejecución es exitosa.
-
----
-
-# 🧱 2. Estrategia de calidad usada en el proyecto
-
-### ✔ Lenguaje y framework
-
-* Node.js + Express
-* API REST de tareas sin base de datos
-
-### ✔ Validación de calidad
-
-* **ESLint** para análisis estático
-
-  * Reglas para estilo consistente y errores comunes
-* **Jest + Supertest** para pruebas unitarias
-* **Cobertura mínima del 80%**
-
-  * Configurada en `jest.config.js`
-* **GitHub Actions** para CI/CD
-
-  * Matriz de versiones Node (18.x y 20.x)
-  * Pasos: install → lint → tests → cobertura → artifacts
-* **act** para validar el pipeline de manera local
+En este proyecto, CD se evidencia en la **subida automática del artifact de cobertura** y en mantener siempre el repositorio en un estado “deploy-ready”.
 
 ---
 
-# 🧪 3. Evidencia de ejecución local del pipeline usando `act`
+# 🧱 2. Estrategia de calidad aplicada al proyecto
+
+### ✔ Herramientas usadas
+
+* **Node.js + Express** → servidor API
+* **Jest + Supertest** → pruebas unitarias y HTTP
+* **ESLint** → análisis estático
+* **GitHub Actions** → pipeline CI/CD
+* **act** → ejecución local del workflow
+* **Cobertura mínima** → 80% configurado en `jest.config.js`
+
+### ✔ Validaciones del proyecto
+
+* Todos los endpoints probados
+* Cobertura mínima respetada
+* Linter sin errores
+* Pipeline configurado para fallar si:
+
+  * Linter falla
+  * Tests fallan
+  * Cobertura insuficiente
+
+---
+
+# 🧪 3. Ejecución local del pipeline con `act`
 
 ## 📌 3.1. `act -l`
 
@@ -66,14 +63,13 @@ En este proyecto, CD se evidencia en la **subida automática del reporte de cobe
 act -l
 ```
 
-📸 **Espacio para la captura:**
+📸 **Inserta aquí tu imagen del comando `act -l`:**
 
-> **PEGAR AQUÍ CAPTURA #1**
-> (Debe mostrar los workflows detectados por act, incluyendo tu archivo .yml)
+> *(CAPTURA #1)*
 
 ---
 
-## 📌 3.2. `act push` — ejecución completa con linter + tests + cobertura
+## 📌 3.2. `act push` con linter + tests + coverage
 
 **Comando usado:**
 
@@ -81,81 +77,68 @@ act -l
 act push
 ```
 
-Esto simula un push real y ejecuta:
+Esto ejecuta exactamente los mismos pasos que GitHub Actions:
 
 * Instalación de dependencias
-* Linter (ESLint)
+* ESLint
 * Pruebas unitarias
 * Cobertura
 * Verificación del umbral
 * Subida de artifacts
 
-📸 **Espacio para la captura:**
+📸 **Inserta aquí la captura completa del pipeline ejecutado con `act`:**
 
-> **PEGAR AQUÍ CAPTURA #2**
-> (Debe mostrarse la tabla de cobertura, el linter pasando, y los pasos de CI en verde exactamente como en GitHub)
+> *(CAPTURA #2 – donde se vea ESLint, los tests y la cobertura)*
 
 ---
 
-# 🔍 4. Análisis del Linter (ESLint)
+# 🔍 4. Evidencia de Linter (ESLint)
 
 ### ✔ ¿Qué valida el linter?
 
-* Estilo de código uniforme
+* Estilo del código
 * Comillas simples
-* Punto y coma
-* Variables usadas correctamente
-* Evitar errores comunes de sintaxis
+* Puntos y coma
+* Variables mal usadas
+* Errores comunes de sintaxis
 
-### ✔ ¿Por qué puede fallar?
+### ✔ ¿Por qué es importante?
 
-* Comillas dobles en lugar de simples
-* Falta de `;`
-* Código muerto
-* Variables sin usar
+Garantiza un estilo **consistente** y evita errores que no son detectados por tests.
 
-## 📌 4.1. Testeo del linter (sin errores)
+---
 
-**Comando usado:**
+## 📌 4.1. Ejecución de lint (sin errores)
+
+**Comando:**
 
 ```
 npm run lint
 ```
 
-📸 **Espacio para la captura:**
+📸 **Inserta aquí captura del lint pasando correctamente:**
 
-> **PEGAR AQUÍ CAPTURA #3**
-> (Muestra eslint pasando sin errores)
+> *(CAPTURA #3)*
 
 ---
 
-## 📌 4.2. Aplicando fix en caso de errores
+## 📌 4.2. Fix (si fue necesario)
 
-**Comando usado:**
+**Comando:**
 
 ```
 npx eslint . --fix
 ```
 
-📸 **Espacio para la captura:**
+📸 **Inserta aquí la captura del fix corrigiendo errores:**
 
-> **PEGAR AQUÍ CAPTURA #4**
-> (Debe mostrar el fix corrigiendo errores, si los hubo)
+> *(CAPTURA #4)*
 
 ---
 
-# 🧪 5. Evidencias de pruebas locales (tests)
+# 🧪 5. Evidencias de pruebas locales
 
-## ✔ ¿Qué prueban los tests?
-
-* Funcionamiento correcto de TODOS los endpoints
-* Validaciones
-* Errores esperados (400 / 404)
-* Cambios de estado (`toggle`)
-* Formato de las tareas
-* Cobertura mínima
-
-## 📌 5.1. Ejecución de tests locales
+## 📌 5.1. Pruebas unitarias
 
 **Comando usado:**
 
@@ -163,14 +146,13 @@ npx eslint . --fix
 npm test
 ```
 
-📸 **Espacio para la captura:**
+📸 **Inserta captura de las pruebas pasando:**
 
-> **PEGAR AQUÍ CAPTURA #5**
-> (Debe mostrar los  tests pasando)
+> *(CAPTURA #5)*
 
 ---
 
-## 📌 5.2. Ejecución de tests con cobertura
+## 📌 5.2. Pruebas con cobertura
 
 **Comando usado:**
 
@@ -178,62 +160,69 @@ npm test
 npm test -- --coverage
 ```
 
-📸 **Espacio para la captura:**
+📸 **Inserta captura de la tabla de cobertura:**
 
-> **PEGAR AQUÍ CAPTURA #6**
-> (Debe mostrar la tabla con el porcentaje de cobertura)
+> *(CAPTURA #6)*
 
----
+Debes mostrar:
 
-# ⚠️ 6. Evidencia de ejecución fallida del pipeline (CI)
-
-Para cumplir el parcial, se debe mostrar un **run fallido**.
-
-Tu error puede ser por:
-
-* Fallo de ESLint
-* Test roto
-* Cobertura insuficiente
-
-📸 **Espacio para la captura:**
-
-> **PEGAR AQUÍ CAPTURA #7**
-> (Debe mostrar el workflow fallido en rojo y el mensaje del error)
-
-**Explicación breve:**
-Describe aquí qué rompiste y por qué falló.
+* Cobertura ≥ 80%
+* Tests totales
+* Tests pasados
+* Archivo con estadísticas
 
 ---
 
-# ✅ 7. Evidencia de ejecución exitosa del pipeline (CI)
+# ⚠️ 6. Ejemplo de ejecución fallida del pipeline (requerido en el parcial)
 
-📸 **Espacio para la captura:**
+Para esta evidencia:
 
-> **PEGAR AQUÍ CAPTURA #8**
-> (Workflow completo en verde con lint + tests + coverage correctos)
+* Rompí un test / rompí ESLint / bajé cobertura
+* Hice push
+* El pipeline falló como se esperaba
 
-**Explicación breve:**
-Describe aquí qué corregiste para que todo volviera a verde.
+📸 **Inserta aquí la captura del run fallido (GitHub Actions en rojo):**
+
+> *(CAPTURA #7)*
+
+### ✔ Explicación breve:
+
+> *Describe aquí qué rompiste (por ejemplo modificar un valor esperado en un test) y por qué Actions lo detectó.*
 
 ---
 
-# 🤖 8. Reflexión sobre el uso de IA en proyectos académicos
+# ✅ 7. Ejecución exitosa del pipeline
 
-### ✔ Métodos para intentar detectar IA
+Después de corregir el error:
 
-1. Comparación de estilos (inconsistencias humanas vs. uniformidad de IA)
-2. Análisis semántico y patrones de redacción
-3. Herramientas de detección basadas en modelos lingüísticos
+📸 **Inserta aquí captura del pipeline en verde (run exitoso):**
 
-### ✔ Por qué NO es posible garantizar detección al 100%
+> *(CAPTURA #8)*
 
-* La IA puede imitar estilos humanos.
-* Estudiantes pueden reescribir contenidos generados.
-* No existen marcadores técnicos obligatorios de autoría.
+### ✔ Explicación breve:
 
-### ✔ Política ética propuesta
+> *Explica qué corregiste y cómo regresó a verde.*
 
-* La IA puede servir como apoyo conceptual (explicaciones, dudas).
-* **No debe generar código, soluciones completas ni artefactos del parcial.**
-* Todo código debe ser escrito, entendido y explicado por el estudiante.
-* Se debe declarar el uso de IA como asistencia, no como generación.
+---
+
+# 🤖 8. Reflexión sobre IA y ética
+
+### ✔ Métodos posibles para detectar código generado por IA
+
+1. Análisis de estilo (repetición, estructuras uniformes)
+2. Herramientas automáticas de detección (no siempre confiables)
+3. Comparación con otros trabajos del estudiante
+
+### ✔ Por qué **NO** puede garantizarse detección al 100%
+
+* La IA puede imitar estilos humanos
+* Los estudiantes pueden reescribir código
+* No existen marcadores técnicos que aseguren autoría
+* El código puede ser generado por humanos pero “parecer IA” o viceversa
+
+### ✔ Propuesta de política ética
+
+* La IA es aceptable para **investigar, aclarar conceptos o pedir explicaciones**
+* **Código del parcial debe ser 100% escrito por el estudiante**
+* Prohibido generar archivos completos o soluciones automáticas
+* El estudiante debe poder explicar cada línea del proyecto
