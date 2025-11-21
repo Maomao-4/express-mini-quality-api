@@ -1,194 +1,208 @@
-# express-mini-quality-api
 
-API REST mínima construida con Node.js y Express para demostrar prácticas de **calidad de software** y **CI/CD**.
 
-## 📋 Descripción
+# 📘 **README.md — express-mini-quality-api** 
 
-Este proyecto es una API de laboratorio diseñada para implementar y demostrar:
-- Integración Continua (CI)
-- Pruebas automatizadas
-- Análisis de código con linter
-- Cobertura de código
-- Pipeline automatizado con GitHub Actions
+# **express-mini-quality-api**
 
-## ✨ Características
+API REST minimalista creada con **Node.js + Express**, diseñada específicamente para demostrar **calidad de software**, incluyendo:
 
-### Endpoints de la API
+* Pruebas unitarias
+* Cobertura de código
+* Análisis estático con ESLint
+* Pipeline CI/CD en GitHub Actions
+* Validación del pipeline en local usando `act`
 
-1. **GET /health**
-   - Endpoint de verificación del estado del servidor
-   - Responde: `{ "status": "ok" }`
+Este proyecto forma parte del **Parcial III – Calidad de Software Avanzado**.
 
-2. **GET /users**
-   - Devuelve una lista de usuarios (datos en memoria)
-   - Responde: Array de usuarios con `id` y `name`
+---
 
-3. **POST /math/sum**
-   - Realiza la suma de dos números
-   - Body: `{ "a": number, "b": number }`
-   - Responde: `{ "result": number }` o error 400 si los parámetros son inválidos
+# 📌 **1. Descripción general**
 
-## 🔧 Requisitos previos
+`express-mini-quality-api` es una API simple con tres funcionalidades principales:
 
-- **Node.js**: versión 18.x o superior
-- **npm**: versión 9.x o superior
-- **Git**: para clonar el repositorio
+* Verificar el estado del servicio
+* Listar usuarios en memoria
+* Realizar una suma validada vía JSON
 
-## 📦 Instalación
+El objetivo académico es demostrar la aplicación real de prácticas de calidad y CI/CD sobre un proyecto Express muy pequeño pero bien estructurado.
 
-\`\`\`bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/express-mini-quality-api.git
+---
 
-# Navegar al directorio
+# ⚙️ **2. Endpoints del proyecto**
+
+## ✔ GET `/health`
+
+Devuelve el estado del servicio.
+**Ejemplo de respuesta:**
+
+```json
+{ "status": "ok" }
+```
+
+## ✔ GET `/users`
+
+Retorna una lista de usuarios almacenados en memoria.
+Tres usuarios precargados.
+
+**Estructura:**
+
+```json
+{ "id": 1, "name": "Ana" }
+```
+
+## ✔ POST `/math/sum`
+
+Recibe dos números y devuelve su suma.
+
+**Body esperado:**
+
+```json
+{ "a": 5, "b": 3 }
+```
+
+**Validaciones:**
+
+* Ambos parámetros obligatorios
+* Ambos deben ser numéricos
+* Errores devuelven `400`
+
+---
+
+# 🧱 **3. Requisitos previos**
+
+* Node.js (18.x o 20.x recomendado)
+* npm
+* GitHub Actions habilitado
+* Docker (si usarás `act`)
+* `act` instalado (opcional)
+
+---
+
+# 🚀 **4. Instalación**
+
+Clonar el repositorio:
+
+```
+git clone <URL_DE_TU_REPO>
 cd express-mini-quality-api
+```
 
-# Instalar dependencias
+Instalar dependencias:
+
+```
 npm install
-\`\`\`
+```
 
-## 🚀 Uso
+---
 
-### Iniciar el servidor
+# ▶️ **5. Scripts**
 
-\`\`\`bash
-# Modo producción
-npm start
+| Comando                  | Descripción                             |
+| ------------------------ | --------------------------------------- |
+| `npm start`              | Inicia el servidor                      |
+| `npm run dev`            | Modo desarrollo (si usas nodemon)       |
+| `npm test`               | Ejecuta las pruebas unitarias           |
+| `npm test -- --coverage` | Ejecuta pruebas + cobertura             |
+| `npm run lint`           | Ejecuta ESLint                          |
+| `npx eslint . --fix`     | Corrige errores de lint automáticamente |
 
-# Modo desarrollo (con nodemon)
-npm run dev
-\`\`\`
+---
 
-El servidor se ejecutará en `http://localhost:3000`
+# 🧪 **6. Pruebas unitarias**
 
-### Ejemplos de uso
+Este proyecto usa:
 
-\`\`\`bash
-# Health check
-curl http://localhost:3000/health
+* **Jest** para pruebas unitarias
+* **Supertest** para probar endpoints HTTP
 
-# Obtener usuarios
-curl http://localhost:3000/users
+Las pruebas cubren:
 
-# Sumar dos números
-curl -X POST http://localhost:3000/math/sum \
-  -H "Content-Type: application/json" \
-  -d '{"a": 5, "b": 3}'
-\`\`\`
+* `/health`
+* `/users`
+* `/math/sum` (casos válidos y error)
 
-## 🧪 Calidad de código
+La cobertura mínima configurada es del **80%**, y el pipeline falla si no se cumple.
 
-### Linter
+---
 
-El proyecto usa **ESLint** para análisis estático de código:
+# 🧹 **7. Linter (ESLint)**
 
-\`\`\`bash
-npm run lint
-\`\`\`
+ESLint valida:
 
-### Pruebas unitarias
+* Uso correcto de comillas
+* Puntos y coma
+* Reglas de estilo del proyecto
+* Posibles errores de sintaxis o variables sin usar
 
-Framework de pruebas: **Jest** con **Supertest**
+El pipeline de CI falla automáticamente si ESLint detecta errores.
 
-\`\`\`bash
-# Ejecutar todas las pruebas
-npm test
+---
 
-# Ejecutar pruebas en modo watch
-npm run test:watch
+# 🔄 **8. CI/CD con GitHub Actions**
 
-# Generar reporte de cobertura
-npm run coverage
-\`\`\`
+El proyecto incluye un workflow que se ejecuta en:
 
-### Cobertura de código
+* `push` a `main` o `develop`
+* `pull_request` a `main` o `develop`
 
-- **Umbral mínimo configurado**: 80% global
-- Métricas evaluadas: líneas, funciones, branches, statements
-- El comando `npm test` falla automáticamente si no se alcanza el umbral
+### El pipeline ejecuta:
 
-## 🔄 CI/CD
+1. **Checkout del código**
+2. **Configuración de Node**
+3. **Instalación de dependencias**
+4. **Ejecución de ESLint**
+5. **Pruebas unitarias**
+6. **Verificación de cobertura mínima**
+7. **Subida del reporte de cobertura como artifact**
 
-### GitHub Actions Workflow
+Si algo falla → pipeline rojo ❌
+Si todo pasa → pipeline verde ✔️
 
-El proyecto incluye un pipeline automatizado (`.github/workflows/ci-quality.yml`) que:
+---
 
-1. **Se ejecuta en**:
-   - Push a ramas `main` o `develop`
-   - Pull requests hacia `main` o `develop`
+# 🐳 **9. Validación del pipeline en local con `act`**
 
-2. **Pasos del pipeline**:
-   - ✅ Checkout del código
-   - ✅ Configuración de Node.js (versiones 18.x y 20.x)
-   - ✅ Instalación de dependencias
-   - ✅ Ejecución del linter
-   - ✅ Ejecución de pruebas con cobertura
-   - ✅ Verificación del umbral de cobertura
-   - ✅ Generación de artefactos con reportes
+Puedes simular la ejecución del workflow sin hacer push:
 
-3. **Criterios de fallo**:
-   - Errores de linting
-   - Pruebas fallidas
-   - Cobertura por debajo del 80%
+### Listar workflows:
 
-### Simulación local con `act`
+```
+act -l
+```
 
-Puedes ejecutar el workflow localmente usando [nektos/act](https://github.com/nektos/act):
+### Ejecutar el pipeline como si fuera un push:
 
-\`\`\`bash
-# Instalar act (si no lo tienes)
-# macOS: brew install act
-# Linux: ver documentación oficial
-
-# Simular un push event
+```
 act push
+```
 
-# Simular un pull request
-act pull_request
-\`\`\`
+Esto ejecuta exactamente los mismos pasos que GitHub Actions (lint, tests, cobertura, artifacts).
 
-## 📁 Estructura del proyecto
+Es ideal para detectar fallos **antes de subir código**.
 
-\`\`\`
-express-mini-quality-api/
-├── .github/
-│   └── workflows/
-│       └── ci-quality.yml          # Pipeline de CI/CD
-├── src/
-│   ├── __tests__/                  # Pruebas unitarias
-│   │   ├── health.test.js
-│   │   ├── users.test.js
-│   │   └── math.test.js
-│   └── index.js                    # Servidor Express
-├── .gitignore
-├── eslint.config.js                # Configuración ESLint
-├── jest.config.js                  # Configuración Jest
-├── package.json
-└── README.md
-\`\`\`
+---
 
-## 🛠️ Tecnologías utilizadas
+# 📄 **10. Archivo RESPUESTAS.md**
 
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Linter**: ESLint
-- **Testing**: Jest + Supertest
-- **CI/CD**: GitHub Actions
-- **Simulación local**: nektos/act
+El proyecto incluye un documento donde se explica:
 
-## 📊 Métricas de calidad
+* Diferencia entre CI y CD
+* Herramientas de calidad aplicadas
+* Ejemplo de ejecución fallida del pipeline
+* Ejecución exitosa posterior
+* Uso de `act`
+* Reflexión sobre IA y ética académica
 
-| Métrica | Valor objetivo |
-|---------|----------------|
-| Cobertura de líneas | ≥ 80% |
-| Cobertura de funciones | ≥ 80% |
-| Cobertura de branches | ≥ 80% |
-| Cobertura de statements | ≥ 80% |
+---
 
-## 📝 Licencia
+# 🎯 **11. Objetivo académico**
 
-ISC
+Este proyecto se creó siguiendo las restricciones del parcial:
 
-## 👥 Autor
+* Código escrito manualmente
+* CI/CD real
+* Pruebas completas
+* Cobertura mínima
+* Uso de herramientas profesionales de calidad
 
-Proyecto creado para fines académicos - demostración de calidad de software y CI/CD.
+
