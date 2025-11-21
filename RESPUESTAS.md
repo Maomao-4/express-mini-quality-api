@@ -2,7 +2,7 @@
 
 ### **Parcial III – Calidad de Software Avanzado**
 
-**Yanisca Herrera Francp**
+**Yanisca Herrera Franco**
 
 ---
 
