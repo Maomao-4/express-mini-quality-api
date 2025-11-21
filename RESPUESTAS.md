@@ -63,9 +63,8 @@ En este proyecto, CD se evidencia en la **subida automática del artifact de cob
 act -l
 ```
 
-📸 **Inserta aquí tu imagen del comando `act -l`:**
+<img width="1241" height="60" alt="image" src="https://github.com/user-attachments/assets/4f5a8eee-0be9-4e29-98b4-543a4d7bcfb1" />
 
-> *(CAPTURA #1)*
 
 ---
 
@@ -86,9 +85,8 @@ Esto ejecuta exactamente los mismos pasos que GitHub Actions:
 * Verificación del umbral
 * Subida de artifacts
 
-📸 **Inserta aquí la captura completa del pipeline ejecutado con `act`:**
+<img width="1347" height="785" alt="image" src="https://github.com/user-attachments/assets/a529c9da-2a84-4746-9e9a-2260e9a815e7" />
 
-> *(CAPTURA #2 – donde se vea ESLint, los tests y la cobertura)*
 
 ---
 
@@ -116,13 +114,12 @@ Garantiza un estilo **consistente** y evita errores que no son detectados por te
 npm run lint
 ```
 
-📸 **Inserta aquí captura del lint pasando correctamente:**
+<img width="371" height="58" alt="image" src="https://github.com/user-attachments/assets/dad26553-09cd-49d2-b849-35db73c7c162" />
 
-> *(CAPTURA #3)*
 
 ---
 
-## 📌 4.2. Fix (si fue necesario)
+## 📌 4.2. Fix (Error controlado)
 
 **Comando:**
 
@@ -130,9 +127,8 @@ npm run lint
 npx eslint . --fix
 ```
 
-📸 **Inserta aquí la captura del fix corrigiendo errores:**
+<img width="928" height="105" alt="image" src="https://github.com/user-attachments/assets/a2bff105-16ad-4804-b65b-4d23ae989096" />
 
-> *(CAPTURA #4)*
 
 ---
 
@@ -146,9 +142,7 @@ npx eslint . --fix
 npm test
 ```
 
-📸 **Inserta captura de las pruebas pasando:**
-
-> *(CAPTURA #5)*
+<img width="595" height="319" alt="image" src="https://github.com/user-attachments/assets/3a01393a-13d9-4da0-97aa-8271d63a742a" />
 
 ---
 
@@ -160,11 +154,9 @@ npm test
 npm test -- --coverage
 ```
 
-📸 **Inserta captura de la tabla de cobertura:**
+<img width="601" height="316" alt="image" src="https://github.com/user-attachments/assets/318d2418-7c91-45a0-949f-d56fb5338995" />
 
-> *(CAPTURA #6)*
-
-Debes mostrar:
+muestra:
 
 * Cobertura ≥ 80%
 * Tests totales
@@ -173,7 +165,7 @@ Debes mostrar:
 
 ---
 
-# ⚠️ 6. Ejemplo de ejecución fallida del pipeline (requerido en el parcial)
+# ⚠️ 6. Ejemplo de ejecución fallida del pipeline
 
 Para esta evidencia:
 
@@ -181,13 +173,15 @@ Para esta evidencia:
 * Hice push
 * El pipeline falló como se esperaba
 
-📸 **Inserta aquí la captura del run fallido (GitHub Actions en rojo):**
+<img width="1542" height="543" alt="image" src="https://github.com/user-attachments/assets/f0007730-7ea7-4fdb-a816-16645595119a" />
 
-> *(CAPTURA #7)*
 
 ### ✔ Explicación breve:
 
-> *Describe aquí qué rompiste (por ejemplo modificar un valor esperado en un test) y por qué Actions lo detectó.*
+> En esta ejecución modifiqué intencionalmente uno de los tests para que fallara (cambié el valor esperado en una de las pruebas de los endpoints).
+> Al hacer `git push`, GitHub Actions ejecutó el workflow y el job se detuvo en el paso **“Ejecutar pruebas unitarias con cobertura”**, marcando el pipeline en rojo.
+> En los logs se puede ver el mensaje de Jest indicando que el valor recibido no coincide con el esperado.
+> Esta ejecución demuestra que el pipeline detecta automáticamente errores en los tests y evita que cambios defectuosos pasen la validación de CI.
 
 ---
 
@@ -195,13 +189,23 @@ Para esta evidencia:
 
 Después de corregir el error:
 
-📸 **Inserta aquí captura del pipeline en verde (run exitoso):**
+<img width="1881" height="636" alt="image" src="https://github.com/user-attachments/assets/6aade190-8581-4ede-bcb7-039cb63e6d33" />
 
-> *(CAPTURA #8)*
 
 ### ✔ Explicación breve:
 
-> *Explica qué corregiste y cómo regresó a verde.*
+> Después de identificar el fallo en la ejecución anterior, revertí el cambio en el test y dejé nuevamente el valor esperado correcto.
+> Volví a hacer `git push` y el workflow de GitHub Actions se ejecutó otra vez sobre las ramas configuradas.
+> En esta captura se puede ver que todos los pasos del job se completan en verde:
+>
+> * checkout del código
+> * instalación de dependencias
+> * ejecución de ESLint
+> * pruebas unitarias con cobertura
+> * verificación de la cobertura mínima
+> * subida del reporte de cobertura como artifact
+>
+> Esta ejecución exitosa muestra que, una vez corregido el problema, el pipeline confirma que el proyecto está en un estado estable y listo para ser entregado.
 
 ---
 
